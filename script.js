@@ -38,8 +38,9 @@ function testCompAnswers() {
     return numbPosib;
 }
 
-function playRound(userSelection, computerSelection) {
-    userSelection = userSelection.toLowerCase();
+function playRound() {
+    let userSelection = getUserInput();
+    let computerSelection = getComputerInput();
     if (userSelection === computerSelection) {
         return "Draw! You both played - " + computerSelection;
     } else if (userSelection === toolsPull[0]) {
@@ -65,7 +66,7 @@ function playRound(userSelection, computerSelection) {
             case toolsPull[0]:
                 return "You lost! The round was - " + userSelection + " vs " + computerSelection;
                 break;
-            case toolsPull[2]:
+            case toolsPull[1]:
                 return "You won! The round was - " + userSelection + " vs " + computerSelection;
                 break;
         }
@@ -77,9 +78,15 @@ function playRound(userSelection, computerSelection) {
 function getUserInput() {
     let toolsPoolStr = toolsPull.toString().replaceAll(',', ', ');
     let userTool = prompt("Choose your tool - " + toolsPoolStr);
+    if (userTool === null) {
+        alert("You cancelled the game!");
+    }
     userTool = userTool.toLowerCase();
     while (!(toolsPull.includes(userTool))) {
         userTool = prompt("Your input was incorrect! Please, choose from this tools - " + toolsPoolStr);
+        if (userTool === null) {
+            alert("You cancelled the game!");
+        }
         userTool = userTool.toLowerCase();
     }
     return userTool;
@@ -88,9 +95,24 @@ function getUserInput() {
 function game() {
     let roundCount = 0;
     let score = [0, 0];
-    let userTool = getUserInput();
-    let compTool = getComputerInput();
-    console.log(playRound(userTool, compTool));
+    let roundResult;
+
+    while (roundCount < 5) {
+        roundResult = playRound();
+        while (roundResult.includes("Draw")) {
+            roundResult = roundResult + "\n" + "Play the round again!";
+            alert(roundResult);
+            roundResult = playRound();
+        }
+        alert(roundResult);
+        if (roundResult.includes("won")) {
+            score[0]++;
+        } else {
+            score[1]++;
+        }
+        roundCount++;
+    }
+    alert("The game is over!\nFinal score: " + `you - ${score[0]} vs ${score[1]} - computer`);
 }
 
 game();
