@@ -2,7 +2,7 @@
 
 const toolsBtns = document.querySelectorAll(".gameBtns > button");
 
-
+toggleToolsBtns()
 function toggleToolsBtns() {
     toolsBtns.forEach(btn => {
         console.log(btn.checkVisibility());
