@@ -1,21 +1,46 @@
-// startGame();
-
 const toolsBtns = document.querySelectorAll(".gameBtns > button");
+const startBtn = document.querySelector("#startBtn");
 
-toggleToolsBtns()
+const gameStatus = document.querySelector("#gameStatus");
+const score = document.querySelector(".score");
+
+startBtn.addEventListener("click", play);
+
+toggleToolsBtns();
+setToolsBtns();
+
+function play() {
+    toggleToolsBtns();
+    toggleStartBtn();
+    // startGame();
+}
+
+function setToolsBtns() {
+    toolsBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          gameStatus.textContent =  playRound(e.target.id);
+
+        });
+    })
+}
+
 function toggleToolsBtns() {
-    toolsBtns.forEach(btn => {
-        console.log(btn.checkVisibility());
+    toolsBtns.forEach((btn) => {
         if (btn.checkVisibility()) {
-
-            btn.setAttribute("style", "display:none;")
+            btn.style.display = "none";
         } else {
-            btn.setAttribute("style", "display:initial;")
-
+            btn.style.display = "initial";
         }
     });
 }
 
+function toggleStartBtn() {
+    if (startBtn.checkVisibility()) {
+        startBtn.style.display = "none";
+    } else {
+        startBtn.style.display = "initial";
+    }
+}
 
 const toolsPull = ['rock', 'paper', 'scissors'];
 
@@ -57,8 +82,7 @@ function testCompAnswers() {
     return numbPosib;
 }
 
-function playRound() {
-    let userSelection = getUserInput();
+function playRound(userSelection) {
     let computerSelection = getComputerInput();
     if (userSelection === computerSelection) {
         return "Draw! You both played - " + computerSelection;
@@ -96,7 +120,8 @@ function playRound() {
 
 function getUserInput() {
     let toolsPoolStr = toolsPull.toString().replaceAll(',', ', ');
-    let userTool = prompt("Choose your tool - " + toolsPoolStr);
+    while (userTool);
+    // let userTool = prompt("Choose your tool - " + toolsPoolStr);
     if (userTool === null) {
         alert("You cancelled the game!");
     }
@@ -120,10 +145,10 @@ function startGame() {
         roundResult = playRound();
         while (roundResult.includes("Draw")) {
             roundResult = roundResult + "\n" + "Play the round again!";
-            alert(roundResult);
+            gameStatus.textContent = (roundResult);
             roundResult = playRound();
         }
-        alert(roundResult);
+        gameStatus.textContent = roundResult;
         if (roundResult.includes("won")) {
             score[0]++;
         } else {
@@ -131,5 +156,5 @@ function startGame() {
         }
         roundCount++;
     }
-    alert("The game is over!\nFinal score: " + `you - ${score[0]} vs ${score[1]} - computer`);
+    gameStatus.textContent = "The game is over!\nFinal score: " + `you - ${score[0]} vs ${score[1]} - computer`;
 }
