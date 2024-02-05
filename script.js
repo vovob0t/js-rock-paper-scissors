@@ -92,7 +92,7 @@ function getUserInput() {
     return userTool;
 }
 
-function game() {
+function startGame() {
     let roundCount = 0;
     let score = [0, 0];
     let roundResult;
@@ -115,4 +115,4 @@ function game() {
     alert("The game is over!\nFinal score: " + `you - ${score[0]} vs ${score[1]} - computer`);
 }
 
-game();
+startGame();
