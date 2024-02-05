@@ -1,0 +1,24 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.gameBtns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 4px;
+    margin-top: 30px;
+}
+
+.gameBtns button {
+    font-size: 18px;
+    width: 100px;
+    
+}

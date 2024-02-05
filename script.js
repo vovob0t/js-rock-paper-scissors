@@ -1,3 +1,22 @@
+// startGame();
+
+const toolsBtns = document.querySelectorAll(".gameBtns > button");
+
+
+function toggleToolsBtns() {
+    toolsBtns.forEach(btn => {
+        console.log(btn.checkVisibility());
+        if (btn.checkVisibility()) {
+
+            btn.setAttribute("style", "display:none;")
+        } else {
+            btn.setAttribute("style", "display:initial;")
+
+        }
+    });
+}
+
+
 const toolsPull = ['rock', 'paper', 'scissors'];
 
 function getRandomBetween0and2() {
@@ -114,5 +133,3 @@ function startGame() {
     }
     alert("The game is over!\nFinal score: " + `you - ${score[0]} vs ${score[1]} - computer`);
 }
-
-startGame();
