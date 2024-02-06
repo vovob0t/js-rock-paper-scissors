@@ -2,7 +2,9 @@ const toolsBtns = document.querySelectorAll(".gameBtns > button");
 const startBtn = document.querySelector("#startBtn");
 
 const gameStatus = document.querySelector("#gameStatus");
-const score = document.querySelector(".score");
+
+const userScore = document.querySelector("#userScore")
+const compScore = document.querySelector("#compScore");
 
 startBtn.addEventListener("click", play);
 
@@ -12,17 +14,45 @@ setToolsBtns();
 function play() {
     toggleToolsBtns();
     toggleStartBtn();
+    resetScore();
+    gameStatus.textContent = "To play - press one of the buttons below with the tool name!"
     // startGame();
+    // while(score[0].textContent!=="5"||score[1].textContent!=="5"){};
+}
+
+function resetScore() {
+    userScore.textContent = "0";
+    compScore.textContent = "0";
 }
 
 function setToolsBtns() {
     toolsBtns.forEach((btn) => {
         btn.addEventListener("click", (e) => {
-          gameStatus.textContent =  playRound(e.target.id);
-
+            roundRes = playRound(e.target.id);
+            addScore(roundRes);
         });
     })
 }
+
+function addScore(roundResult) {
+    if (roundResult.includes("Draw")) {
+        roundResult = roundResult + "<br>" + "Play the round again!";
+        gameStatus.innerHTML = (roundResult);
+
+    } else if (roundResult.includes("won")) {
+        userScore.textContent = Number.parseInt(userScore.textContent) + 1;
+        gameStatus.textContent = (roundResult);
+    } else {
+        compScore.textContent = Number.parseInt(compScore.textContent) + 1;
+        gameStatus.textContent = (roundResult);
+    }
+    if (userScore.textContent === "5" || compScore.textContent === "5") {
+        gameStatus.textContent = "The game is over!\nFinal score: ";
+        toggleToolsBtns();
+        toggleStartBtn();
+    }
+}
+
 
 function toggleToolsBtns() {
     toolsBtns.forEach((btn) => {
@@ -85,7 +115,7 @@ function testCompAnswers() {
 function playRound(userSelection) {
     let computerSelection = getComputerInput();
     if (userSelection === computerSelection) {
-        return "Draw! You both played - " + computerSelection;
+        return "Draw! You both played - " + "<b>" + computerSelection + "</b>";
     } else if (userSelection === toolsPull[0]) {
         switch (computerSelection) {
             case toolsPull[1]:
