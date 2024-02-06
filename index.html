@@ -11,11 +11,13 @@
 <body>
     <div class="container">
         <h1 class="gameName">Rock Paper Scissors</h1>
-        <div>
-            <span id="gameStatus">Hi! Welcome to a <strong>rock paper scissors</strong> game!
-                <br>Press "play" to begin!</span>
-            <span id="score"></span>
+
+        <div id="gameStatus">Hi! Welcome to a <strong>rock paper scissors</strong> game!
+            <br>Press "play" to begin!<br>
         </div>
+        <div id="score"><b>You</b> - <span class="scoreNumb" id="userScore">0</span> vs <span class="scoreNumb"
+                id="compScore">0</span> - <b>AI</b></div>
+
         <div class="gameBtns">
             <div class="start">
                 <button id="startBtn">Play!</button>
