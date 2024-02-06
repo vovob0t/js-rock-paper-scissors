@@ -1,11 +1,25 @@
 body {
     display: flex;
     justify-content: center;
+
 }
 
 .container {
     display: flex;
     flex-direction: column;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+}
+
+#score {
+    margin: 20px 0px 0px;
+    border: 3px rebeccapurple solid;
+    width: 150px;
+    text-align: center;
+
+    padding: 6px 10px;
 }
 
 .gameBtns {
@@ -20,5 +34,4 @@ body {
 .gameBtns button {
     font-size: 18px;
     width: 100px;
-    
 }
