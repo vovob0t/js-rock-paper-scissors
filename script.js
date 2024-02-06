@@ -6,18 +6,16 @@ const gameStatus = document.querySelector("#gameStatus");
 const userScore = document.querySelector("#userScore")
 const compScore = document.querySelector("#compScore");
 
-startBtn.addEventListener("click", play);
-
 toggleToolsBtns();
-setToolsBtns();
+setToolsBtnsEvents();
+
+startBtn.addEventListener("click", play);
 
 function play() {
     toggleToolsBtns();
     toggleStartBtn();
     resetScore();
     gameStatus.textContent = "To play - press one of the buttons below with the tool name!"
-    // startGame();
-    // while(score[0].textContent!=="5"||score[1].textContent!=="5"){};
 }
 
 function resetScore() {
@@ -25,7 +23,7 @@ function resetScore() {
     compScore.textContent = "0";
 }
 
-function setToolsBtns() {
+function setToolsBtnsEvents() {
     toolsBtns.forEach((btn) => {
         btn.addEventListener("click", (e) => {
             roundRes = playRound(e.target.id);
@@ -47,7 +45,12 @@ function addScore(roundResult) {
         gameStatus.textContent = (roundResult);
     }
     if (userScore.textContent === "5" || compScore.textContent === "5") {
-        gameStatus.textContent = "The game is over!\nFinal score: ";
+        gameStatus.textContent = "The game is over!";
+        if (userScore.textContent === "5") {
+            gameStatus.innerHTML += " <b>You won!</b>"
+        } else {
+            gameStatus.innerHTML += " <b>You lost!</b>"
+        }
         toggleToolsBtns();
         toggleStartBtn();
     }
@@ -88,30 +91,6 @@ function getComputerInput() {
     return compAnswer;
 }
 
-function testCompAnswers() {
-    let numbPosib = [0, 0, 0, 0];
-    let tempNumb
-    for (i = 0; i < 100; i++) {
-        tempNumb = getComputerInput();
-        console.log(tempNumb);
-        switch (tempNumb) {
-            case toolsPull[0]:
-                numbPosib[0]++;
-                break;
-            case toolsPull[1]:
-                numbPosib[1]++;
-                break;
-            case toolsPull[2]:
-                numbPosib[2]++;
-                break;
-            default:
-                numbPosib[3]++;
-                break
-        }
-    }
-    return numbPosib;
-}
-
 function playRound(userSelection) {
     let computerSelection = getComputerInput();
     if (userSelection === computerSelection) {
@@ -146,45 +125,4 @@ function playRound(userSelection) {
     } else {
         return "You answer is invalid! Please, choose between this tools: \n " + toolsPull;
     }
-}
-
-function getUserInput() {
-    let toolsPoolStr = toolsPull.toString().replaceAll(',', ', ');
-    while (userTool);
-    // let userTool = prompt("Choose your tool - " + toolsPoolStr);
-    if (userTool === null) {
-        alert("You cancelled the game!");
-    }
-    userTool = userTool.toLowerCase();
-    while (!(toolsPull.includes(userTool))) {
-        userTool = prompt("Your input was incorrect! Please, choose from this tools - " + toolsPoolStr);
-        if (userTool === null) {
-            alert("You cancelled the game!");
-        }
-        userTool = userTool.toLowerCase();
-    }
-    return userTool;
-}
-
-function startGame() {
-    let roundCount = 0;
-    let score = [0, 0];
-    let roundResult;
-
-    while (roundCount < 5) {
-        roundResult = playRound();
-        while (roundResult.includes("Draw")) {
-            roundResult = roundResult + "\n" + "Play the round again!";
-            gameStatus.textContent = (roundResult);
-            roundResult = playRound();
-        }
-        gameStatus.textContent = roundResult;
-        if (roundResult.includes("won")) {
-            score[0]++;
-        } else {
-            score[1]++;
-        }
-        roundCount++;
-    }
-    gameStatus.textContent = "The game is over!\nFinal score: " + `you - ${score[0]} vs ${score[1]} - computer`;
 }
